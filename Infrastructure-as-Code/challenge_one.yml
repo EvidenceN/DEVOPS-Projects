@@ -1,0 +1,35 @@
+# Challenge 1 - Create an EC2 instance in a given VPC using Cloudformation and .yml file
+# Write a CloudFormation script that will create the following two Resources: AWS::EC2::SecurityGroup and AWS::EC2::Instance. See the snapshot below as a starter point.
+
+#Creates a Security Group which only allows inbound access on TCP port 80 and also allows unrestricted outbound access. Refer to the documentation to check which properties you want to use.
+
+#In the same CloudFormation script: create a resource that deploys an EC2 Server and associate its network interface with the security group mentioned above. Use the following properties:
+
+    #The instance type will be t3.micro.
+
+#NOT FINISHED
+
+Resources:
+  myWebAccessSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Security group for default VPC"
+      GroupName: "test_default_SG"
+      SecurityGroupEgress:
+         IpProtocol: tcp
+         FromPort: 80
+         ToPort: 80
+         CidrIP: 0.0.0.0/0
+      SecurityGroupIngress:
+        IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+      VpcId: "vpc-0976136c128fff88f"
+  myWebServerInstance:
+    Type: AWS::EC2::Instance
+    Properties: 
+      InstanceType: t3.micro
+      SecurityGroups: [!ref myWebAccessSecurityGroup] #!ref returns the name of the service. Which is what is needed here. 
+      NetworkInterfaces: 
+        AssociatePublicIpAddress: "true"
