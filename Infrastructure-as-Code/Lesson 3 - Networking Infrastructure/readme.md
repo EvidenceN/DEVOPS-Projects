@@ -1,0 +1,1 @@
+with the create.sh, update.sh file, no need to repeatedly type in create or update aws stack commands. Just pass in the parameter and run the script. 
