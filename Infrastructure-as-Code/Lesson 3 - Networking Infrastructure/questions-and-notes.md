@@ -1,0 +1,2 @@
+If we have a parameters.json file already, why do we need to define parameters again inside the template? Can't we just reference the parameters in parameters.json file directly in the resources of the template. Also, things like the "default", and "data type" should probably be defined in the parameteres.json file. Why is it not defined there? WHy is it defined in parameters portion of the template?
+
