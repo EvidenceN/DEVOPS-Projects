@@ -14,9 +14,9 @@ Parameters:
 
 Resources:
 
-    VPC: 
-        Type: AWS::EC2::VPC
-        Properties:
+    VPC: # generic name given by me
+        Type: AWS::EC2::VPC # required
+        Properties: # specific to the type above. 
             CidrBlock: !Ref VpcCIDR
             EnableDnsHostnames: true
             Tags: 
@@ -34,4 +34,11 @@ Resources:
         Type: AWS::EC2::VPCGatewayAttachment
         Properties:
             InternetGatewayId: !Ref InternetGateway
-            VpcId: !Ref VPC            
+            VpcId: !Ref VPC       
+
+Outputs:
+    VPC:
+        Description: Reference to the VPC Above #optional
+        Value: !Ref VPC # mandatory
+        Export: #optional
+            Name: !Sub ${EnvironmentName}-VPCID
