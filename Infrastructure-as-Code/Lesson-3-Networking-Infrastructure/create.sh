@@ -1,8 +1,8 @@
 # can create more scripts wit if/else logic. If this resource exist, update it or describe it. If it doesn't exist, create it. 
-
-aws cloudformation create-stack \
 # aws cloudformation update-stack \
 # aws cloudformation describe-stack \
+
+aws cloudformation create-stack \
 --stack-name $1 \
 --template-body file://$2 \
 --parameters file://$3 \
