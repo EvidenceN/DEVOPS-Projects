@@ -1,0 +1,8 @@
+Description: Defining Server infrastructure and security groups for the UdacityProject
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Description: Environment name to prefix resources
+
+Resources:
