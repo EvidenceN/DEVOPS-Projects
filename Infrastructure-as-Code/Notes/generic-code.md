@@ -10,6 +10,12 @@ Example - `!Sub ${EnvironmentName} Private Subnet (AZ2)`
 
 `!Select` - Exmple - `!Select [ 1, !GetAZs '' ]`
 
+`!Join` 
+
+Example -  `!Join [ ",", [ !Ref PublicSubnet1, !Ref PublicSubnet2 ]]`; 
+
+`Fn::Join: [ delimiter, [ comma-delimited list of values ] ]`
+
 ## Subnets
 
 To specify a subnet for your VPC you can use the following syntax: 
@@ -66,5 +72,27 @@ NatGatewayId: String
 NetworkInterfaceId: String
 RouteTableId: String
 VpcPeeringConnectionId: String
+```
+
+### Route Subnet Association
+
+SubnetRouteTableAssociation resource using the following syntax:
+
+```Type: AWS::EC2::SubnetRouteTableAssociation
+Properties: 
+RouteTableId: String
+SubnetId: String
+```
+
+## Outputs
+
+To declare an Output use the following syntax:
+
+```Outputs:
+  Logical ID:
+    Description: Information about the value
+    Value: Value to return - REQUIRED
+    Export:
+      Name: Value to export - OPTIONAL
 ```
 
