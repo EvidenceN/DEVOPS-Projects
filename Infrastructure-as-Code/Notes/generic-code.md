@@ -10,5 +10,20 @@ Properties:
   MapPublicIpOnLaunch: Boolean
   Tags: 
     - Tag
-  VpcId: String```
+  VpcId: String
+  ```
+
+
+Cloudformation Commands
+
+`!GetAtt` 
+Example - `!GetAtt NatGateway1EIP.AllocationId`
+
+`!Sub `
+Example - `!Sub ${EnvironmentName} Private Subnet (AZ2)`
+
+`!Ref` - Example - `!Ref PublicSubnet1`
+
+`!Select` - Exmple - `!Select [ 1, !GetAZs '' ]`
+
 
