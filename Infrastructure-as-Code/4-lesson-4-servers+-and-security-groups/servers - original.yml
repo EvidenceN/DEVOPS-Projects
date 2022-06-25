@@ -46,7 +46,7 @@ Resources:
         ToPort: 65535
         CidrIp: 0.0.0.0/0
 
-        
+
   WebAppLaunchConfig:
     Type: AWS::AutoScaling::LaunchConfiguration
     Properties:
@@ -67,6 +67,7 @@ Resources:
       - DeviceName: "/dev/sdk"
         Ebs:
           VolumeSize: '10'
+
   WebAppGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
@@ -79,6 +80,8 @@ Resources:
       MaxSize: '5'
       TargetGroupARNs:
       - Ref: WebAppTargetGroup
+
+
   WebAppLB:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
@@ -87,6 +90,8 @@ Resources:
       - Fn::ImportValue: !Sub "${EnvironmentName}-PUB2-SN"
       SecurityGroups:
       - Ref: LBSecGroup
+
+      
   Listener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
@@ -98,6 +103,8 @@ Resources:
         Ref: WebAppLB
       Port: '80'
       Protocol: HTTP
+
+
   ALBListenerRule:
       Type: AWS::ElasticLoadBalancingV2::ListenerRule
       Properties:
@@ -109,6 +116,8 @@ Resources:
           Values: [/]
         ListenerArn: !Ref 'Listener'
         Priority: 1
+
+
   WebAppTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:

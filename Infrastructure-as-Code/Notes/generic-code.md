@@ -50,6 +50,17 @@ This function returns the value of an output exported by another stack.
 
 https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-importvalue.html
 
+
+### **Fn::Base64: !Sub |**
+
+Example
+
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo apt-get update -y
+          sudo apt-get install apache2 -y
+          sudo systemctl start apache2.service   
+
 -----------------------------------------------------------------------------------
 ## Subnets
 
@@ -180,6 +191,13 @@ The `LaunchConfigurationName` represents the name of the launch configuration to
 
 The `MinSize & MaxSize` lets us know the range of machines we will be running, which also alerts us to the min/max costs we can be expecting from these machines.
 
-**A target group is a group of registered instances, to whom the traffic will be routed.** The ARN (Amazon Resource Names) serves as a unique ID for any resource. The TargetGroupARNs property refers to the ARNs of the load balancer target group that we will create in the upcoming demos.
+**A target group is a group of registered instances, to whom the traffic will be routed.** The ARN (Amazon Resource Names) serves as a unique ID for any resource. The `TargetGroupARNs` property refers to the ARNs of the load balancer target group that we will create in the upcoming demos.
 
+Note: In a Launch configuration, the only required properties are `ImageId` and `Instance Type`. The remaining ones are optional.
+
+
+*You can have a lauch configuration, but without autoscaling group, the machines won't lauch. So, you need to deploy autoscaling group for the minimum number of machines specified to be built.*
+
+## Load Balancers
+Load balancer will be sent on a specific port to listen to an instance and report back if it's healthy or not. If it's not healthy, autoscaling group will terminate it and build a new one in it's place. 
 

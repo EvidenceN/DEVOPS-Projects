@@ -49,3 +49,38 @@ Resources:
         ToPort: 65535
         CidrIp: 0.0.0.0/0
 
+
+  WebAppLaunchConfig:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      UserData: # UserData script that will run on the new instance automatically after launch
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          sudo apt-get update -y
+          sudo apt-get install apache2 -y
+          sudo systemctl start apache2.service          
+      # ToDo: AMI ID of Ubuntu Linux machine. Too get one, try creating a VM from the web console. 
+      ImageId: ami-052efd3df9dad4825 #ami-00ddb0e5626798373 # ami-0747bdcabd34c712a - Varies for different regions
+      # ToDo: Change the key-pair name, as applicable to you. 
+      KeyName: UdacityProject
+      SecurityGroups:
+      - Ref: WebServerSecGroup
+      InstanceType: t3.medium
+      BlockDeviceMappings:
+      - DeviceName: "/dev/sdk" # Mount Point where we can create folders. 
+        Ebs:
+          VolumeSize: '10' # 10 GB
+
+  WebAppGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      VPCZoneIdentifier: # which subnets should these image instances be created in?
+      - Fn::ImportValue: 
+          !Sub "${EnvironmentName}-PRIV-NETS"
+      LaunchConfigurationName:
+        Ref: WebAppLaunchConfig
+      MinSize: '0'
+      MaxSize: '5'
+      DesiredCapacity: '0'
+#      TargetGroupARNs: #load balancer for this image instance?
+#      - Ref: WebAppTargetGroup   
