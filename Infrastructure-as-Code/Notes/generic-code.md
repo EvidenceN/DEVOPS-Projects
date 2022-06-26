@@ -201,3 +201,5 @@ Note: In a Launch configuration, the only required properties are `ImageId` and 
 ## Load Balancers
 Load balancer will be sent on a specific port to listen to an instance and report back if it's healthy or not. If it's not healthy, autoscaling group will terminate it and build a new one in it's place. 
 
+
+**Auto **

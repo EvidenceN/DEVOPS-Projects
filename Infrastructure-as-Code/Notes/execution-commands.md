@@ -15,3 +15,7 @@
 ./describe.sh secondfullinfra
 
 ./delete.sh secondfullinfra
+
+Copy data into public server from local computer
+
+scp -i test_access.pem UdacityProjectKey.ppk ec2-user@ec2-3-87-219-46.compute-1.amazonaws.com:/home/ec2-user/UdacityProjectKey.ppk
