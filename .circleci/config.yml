@@ -1,0 +1,19 @@
+version 2.1
+
+jobs:
+  environment_variable:
+    docker:
+      - image: cimg/base:stable
+    
+    steps:
+      - checkout # checkout the code from github
+      - run:
+          name: use environment variables
+          command: echo $NAME
+
+workflows:
+  use-env-variable-workflow:
+    jobs:
+      - environment_variable
+
+
