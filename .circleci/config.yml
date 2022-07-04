@@ -1,70 +1,23 @@
 version: 2.1
 
-# executors:
-#   my_docker_image: # name of executor
-#     docker:
-#       - image: cimg/base:stable
+commands:
+  print_pipeline_id:
+    description: "A command to print out the pipeline id from the circlci built in environment variable"
+    steps:
+      - echo $CIRCLE_WORKFLOW_ID
 
-# Instead of using executors above, could also use anchors and aliases which is more DRY than using executors. 
-
-defaults: 
-  &docker_image # name of executor; establishing an anchor
+defaults: &docker_image 
   docker:
     - image: cimg/base:stable
 
 jobs:
-  environment_variable:
-    <<: *docker_image # referencing the anchor using an alias
+  try_out_commands:
+    <<: *docker_image
     
     steps:
-      - checkout # checkout the code from github
-      - run:
-          name: use environment variables
-          command: echo $NAME
-
-  share_files:
-    <<: *docker_image
-
-    steps:
-      - checkout
-      - run: mkdir -p workspace_share
-      - run:
-          command: echo "Testing file sharing between jobs" > workspace_share/output.txt
-      - persist_to_workspace:
-          root: workspace_share # /tmp/dir
-          paths:
-            - output.txt
-
-  output_share:
-    <<: *docker_image
-
-    steps:
-      - attach_workspace:
-          at: /tmp/workspace_share
-
-      - run: cat /tmp/workspace_share/output.txt 
+      - print_pipeline_id
 
 workflows:
-  use-env-variable-workflow:
+  commands_example:
     jobs:
-      - environment_variable # - doesn't need to run everytime but want to check if executor command works. 
-      - share_files
-      - output_share:
-          requires:
-            - share_files
-
-# Alternative path where data is stored at root file and not in a new directory
-
-#      - run: echo "hello world" > ~/output.txt
-#      - persist_to_workspace:
-#          root: ~/
-#          paths:
-#            - output.txt
-
-#  print_output_file:
-#    docker:
-#      - image: circleci/node:13.8.0
-#    steps:
-#      - attach_workspace:
-#          at: ~/
-#      - run: cat ~/output.txt
+      - try_out_commands
