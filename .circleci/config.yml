@@ -7,8 +7,8 @@ version: 2.1
 
 # Instead of using executors above, could also use anchors and aliases which is more DRY than using executors. 
 
-defaults: &docker_image # establishing an anchor
-  my_docker_image: # name of executor
+defaults: # establishing an anchor
+  &docker_image: # name of executor
     docker:
       - image: cimg/base:stable
 
