@@ -1,9 +1,13 @@
 version: 2.1
 
-jobs:
-  environment_variable:
+executors:
+  my_docker_image: # name of executor
     docker:
       - image: cimg/base:stable
+
+jobs:
+  environment_variable:
+    executor: my_docker_image
     
     steps:
       - checkout # checkout the code from github
@@ -11,9 +15,35 @@ jobs:
           name: use environment variables
           command: echo $NAME
 
+  share_files:
+    executor: my_docker_image
+
+    steps:
+      - checkout
+      - run: mkdir -p workspace_share
+      - run:
+          command: echo "Testing file sharing between jobs" > workspace_share/output.txt
+      - persist_to_workspace:
+          root: workspace_share # /tmp/dir
+          paths:
+            - output.txt
+
+  output_share:
+    executor: my_docker_image
+
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace_share
+
+      - run: cat /tmp/workspace_share/output.txt 
+
 workflows:
   use-env-variable-workflow:
     jobs:
-      - environment_variable
+      - environment_variable # - doesn't need to run everytime but want to check if executor command works. 
+      - share_files
+      - output_share:
+          requires:
+            - share_files
 
 
