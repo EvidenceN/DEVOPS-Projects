@@ -46,4 +46,18 @@ workflows:
           requires:
             - share_files
 
+# Alternative path where data is stored at root file and not in a new directory
 
+#      - run: echo "hello world" > ~/output.txt
+#      - persist_to_workspace:
+#          root: ~/
+#          paths:
+#            - output.txt
+
+#  print_output_file:
+#    docker:
+#      - image: circleci/node:13.8.0
+#    steps:
+#      - attach_workspace:
+#          at: ~/
+#      - run: cat ~/output.txt
