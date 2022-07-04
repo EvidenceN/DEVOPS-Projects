@@ -1,13 +1,20 @@
 version: 2.1
 
-executors:
+# executors:
+#   my_docker_image: # name of executor
+#     docker:
+#       - image: cimg/base:stable
+
+# Instead of using executors above, could also use anchors and aliases which is more DRY than using executors. 
+
+defaults: &docker_image # establishing an anchor
   my_docker_image: # name of executor
     docker:
       - image: cimg/base:stable
 
 jobs:
   environment_variable:
-    executor: my_docker_image
+    <<: *docker_image # referencing the anchor using an alias
     
     steps:
       - checkout # checkout the code from github
@@ -16,7 +23,7 @@ jobs:
           command: echo $NAME
 
   share_files:
-    executor: my_docker_image
+    <<: *docker_image
 
     steps:
       - checkout
@@ -29,7 +36,7 @@ jobs:
             - output.txt
 
   output_share:
-    executor: my_docker_image
+    <<: *docker_image
 
     steps:
       - attach_workspace:
