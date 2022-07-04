@@ -3,6 +3,8 @@ version: 2.1
 commands:
   print_pipeline_id:
     description: "A command to print out the pipeline id from the circlci built in environment variable"
+# parameters is not a required field, but this is an example of how to use it. 
+
     # parameters:
     #   test:
     #     default: $CIRCLE_WORKFLOW_ID
