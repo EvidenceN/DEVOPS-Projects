@@ -9,21 +9,21 @@ jobs:
     <<: *docker_image
 
     steps:
-      - run: checkout
+      - checkout
       - run: npm run lint
 
   test:
     <<: *docker_image
 
     steps:
-      - run: checkout
+      - checkout
       - run: npm run test
 
   analyze:
     <<: *docker_image
 
     steps:
-      - run: checkout
+      - checkout
       - run: npm run audit
 
 workflows:
