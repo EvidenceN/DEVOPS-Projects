@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - checkout
-      - run npm i
+      - run: npm i
       - run: npm run lint
 
   test:
@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - checkout
-      - run npm i
+      - run: npm i
       - run: npm run test
 
   analyze:
