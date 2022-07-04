@@ -1,30 +1,32 @@
 version: 2.1
 
-commands:
-  print_pipeline_id:
-    description: "A command to print out the pipeline id from the circlci built in environment variable"
-# parameters is not a required field, but this is an example of how to use it. 
-
-    # parameters:
-    #   test:
-    #     default: $CIRCLE_WORKFLOW_ID
-    #     type: string
-    steps:
-      - run:
-          echo $CIRCLE_WORKFLOW_ID #<<parameters.test>> #can put here as is. Or put after run: or put here with command in front of it like command: query to execute
-
 defaults: &docker_image 
   docker:
-    - image: cimg/base:stable
+    - image: circleci/node:13.8.0
 
 jobs:
-  try_out_commands:
+  intentional_fail:
     <<: *docker_image
 
     steps:
-      - print_pipeline_id # no -run before command here. If not, pipeline will fail with "command not found"
+      - run: print_pipeline_id
+
+      - run: 
+          command: echo "Job above failed intentionally, woohoo 😆"
+          when: on_fail
+
+# Important Note here. The code below would not work because the job above is separate from the job below. "when: on_fail" will only work within the same step in a job. Each job runs independently, so the second job wouldn't know the first job failed. 
+
+  # failure_response:
+  #   <<: *docker_image
+
+  #   steps:
+  #     - run: 
+  #         command: echo "Job above failed intentionally, woohoo 😆"
+  #         when: on_fail
+
 
 workflows:
-  commands_example:
+  failed_jobs:
     jobs:
-      - try_out_commands
+      - intentional_fail
