@@ -13,6 +13,8 @@ jobs:
           name: step_to_fail
           command: print_pipeline_id
 
+# Could also use "- run: exit 1" or "- run: Return 1" to trigger an error. 
+
       - run: 
           name: "failure_result"
           command: echo "Job above failed intentionally, woohoo 😆"
