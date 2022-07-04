@@ -1,0 +1,37 @@
+version: 2.1
+
+defaults: &docker_image 
+  docker:
+    - image: cimg/node:18.4.0
+
+jobs:
+  intentional_fail:
+    <<: *docker_image
+
+    steps:
+      - run: 
+          name: step_to_fail
+          command: print_pipeline_id
+
+# Could also use "- run: exit 1" or "- run: Return 1" to trigger an error. 
+
+      - run: 
+          name: "failure_result"
+          command: echo "Job above failed intentionally, woohoo 😆"
+          when: on_fail
+
+# Important Note here. The code below would not work because the job above is separate from the job below. "when: on_fail" will only work within the same step in a job. Each job runs independently, so the second job wouldn't know the first job failed. 
+
+  # failure_response:
+  #   <<: *docker_image
+
+  #   steps:
+  #     - run: 
+  #         command: echo "Job above failed intentionally, woohoo 😆"
+  #         when: on_fail
+
+
+workflows:
+  failed_jobs:
+    jobs:
+      - intentional_fail

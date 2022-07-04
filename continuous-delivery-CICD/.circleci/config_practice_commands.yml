@@ -1,0 +1,30 @@
+version: 2.1
+
+commands:
+  print_pipeline_id:
+    description: "A command to print out the pipeline id from the circlci built in environment variable"
+# parameters is not a required field, but this is an example of how to use it. 
+
+    # parameters:
+    #   test:
+    #     default: $CIRCLE_WORKFLOW_ID
+    #     type: string
+    steps:
+      - run:
+          echo $CIRCLE_WORKFLOW_ID #<<parameters.test>> #can put here as is. Or put after run: or put here with command in front of it like command: query to execute. could also put it as echo ${CIRCLE_WORKFLOW_ID}
+
+defaults: &docker_image 
+  docker:
+    - image: cimg/base:stable
+
+jobs:
+  try_out_commands:
+    <<: *docker_image
+
+    steps:
+      - print_pipeline_id # no -run before command here. If not, pipeline will fail with "command not found"
+
+workflows:
+  commands_example:
+    jobs:
+      - try_out_commands

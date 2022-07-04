@@ -1,0 +1,69 @@
+version: 2.1
+
+# executors:
+#   my_docker_image: # name of executor
+#     docker:
+#       - image: cimg/base:stable
+
+# Instead of using executors above, could also use anchors and aliases which is more DRY than using executors. 
+
+defaults: &docker_image # name of executor; establishing an anchor
+  docker:
+    - image: cimg/base:stable
+#  working_directory: ~/project ; Can put something like this here as well. 
+jobs:
+  environment_variable:
+    <<: *docker_image # referencing the anchor using an alias
+    
+    steps:
+      - checkout # checkout the code from github
+      - run:
+          name: use environment variables
+          command: echo $NAME
+
+  share_files:
+    <<: *docker_image
+
+    steps:
+      - checkout
+      - run: mkdir -p workspace_share
+      - run:
+          command: echo "Testing file sharing between jobs" > workspace_share/output.txt
+      - persist_to_workspace:
+          root: workspace_share # /tmp/dir
+          paths:
+            - output.txt
+
+  output_share:
+    <<: *docker_image
+
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace_share
+
+      - run: cat /tmp/workspace_share/output.txt 
+
+workflows:
+  use-env-variable-workflow:
+    jobs:
+      - environment_variable # - doesn't need to run everytime but want to check if executor command works. 
+      - share_files
+      - output_share:
+          requires:
+            - share_files
+
+# Alternative path where data is stored at root file and not in a new directory
+
+#      - run: echo "hello world" > ~/output.txt
+#      - persist_to_workspace:
+#          root: ~/
+#          paths:
+#            - output.txt
+
+#  print_output_file:
+#    docker:
+#      - image: circleci/node:13.8.0
+#    steps:
+#      - attach_workspace:
+#          at: ~/
+#      - run: cat ~/output.txt
