@@ -4,3 +4,35 @@ defaults: &docker_image
   docker:
     - image: cimg/node:18.4.0
 
+jobs:
+  build:
+    <<: *docker_image
+
+    steps:
+      - run: checkout
+      - run: npm run lint
+
+  test:
+    <<: *docker_image
+
+    steps:
+      - run: checkout
+      - run: npm run test
+
+  analyze:
+    <<: *docker_image
+
+    steps:
+      - run: checkout
+      - run: npm run audit
+
+workflows:
+  test_continuous_integration:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - analyze:
+          requires:
+            - test
