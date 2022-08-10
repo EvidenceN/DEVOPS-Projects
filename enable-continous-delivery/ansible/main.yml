@@ -1,7 +1,9 @@
 # from this repo https://github.com/SudKul/nd9991-c3-hello-world-exercise-solution/blob/main/main2.yml
 ---
 # Exercise: Define Ansible Playbook
+
 - name: Exercise 
   hosts: localhost
   roles:
    - print
+
