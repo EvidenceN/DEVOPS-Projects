@@ -10,7 +10,7 @@ aws ec2 describe-instances \
 \
         --query 'Reservations[*].Instances[*].PublicIpAddress' \
       --filters "Name=tag:Project,Values=Udacity" \
-      --output text >> inventory```
+      --output text >> inventory.txt```
 
 
 
@@ -30,5 +30,5 @@ aws ec2 describe-instances \
 
        # Assuming the udacity.pem and inventory files are present in the current directory
 
-`ansible-playbook main-remote.yml -i inventory --private-key udacity.pem`
+`ansible-playbook main-remote.yml -i inventory.txt --private-key udacity.pem`
 
