@@ -7,7 +7,7 @@ Resources:
       SecurityGroups:
         !Ref InstanceSecurityGroup
       KeyName: Infra_create
-      ImageId: ami-0d70546e43a941d70
+      ImageId: 'ami-0d70546e43a941d70'
       InstanceType: t2.micro
   InstanceSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
