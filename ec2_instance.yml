@@ -19,5 +19,6 @@ Resources:
           FromPort: '22'
           ToPort: '22'
           CidrIp: 0.0.0.0/0
-      Tags:
-        - Name: InfrastructureCreationSecurity
+      #Tags:
+      #  - Name: InfrastructureCreationSecurity
+      # removed due to this error "Key not found in Tags property"
