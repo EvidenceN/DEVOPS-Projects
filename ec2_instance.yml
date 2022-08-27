@@ -13,7 +13,7 @@ Resources:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
       GroupDescription: For Infrastructure Creation Project
-      GroupName: Infrastructure-Creation
+      #GroupName: Infrastructure-Creation
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: '22'
