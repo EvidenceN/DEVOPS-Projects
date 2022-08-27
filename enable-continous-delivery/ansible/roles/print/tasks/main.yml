@@ -1,0 +1,10 @@
+# from this repo https://github.com/SudKul/nd9991-c3-hello-world-exercise-solution/blob/main/roles/print/tasks/main.yml
+---
+ - name: Print env variable
+   shell: echo $PATH
+   register: print_result
+
+# expose the printed stuff from ansible command line which is usually invisible to us to our command line.
+ - name: print message
+   debug:
+     msg: "{{ print_result.stdout_lines }}"
