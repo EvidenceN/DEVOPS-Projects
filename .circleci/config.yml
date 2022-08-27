@@ -11,7 +11,8 @@ commands:
       - checkout
       - run:
           name: Create Cloudformation Stack
-          command: 
+          # | is needed to concatenate the strings
+          command: |
             aws cloudformation deploy \
               -- template-file ec2_instance.yml \
               -- stack-name create_infrastructure-${CIRCLE_WORKFLOW_ID:0:5} \
