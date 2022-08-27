@@ -20,7 +20,7 @@ jobs:
     steps:
       - AWS-Stack-Command
 
-workflow:
+workflows:
   infra_create:
     jobs:
       - create_infrastructure
