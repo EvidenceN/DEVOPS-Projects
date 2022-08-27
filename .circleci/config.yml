@@ -12,12 +12,12 @@ commands:
       - run:
           name: Create Cloudformation Stack
           # | is needed to concatenate the strings
-          # has to be --template-file and not -- template file. No space or error will occur. 
-          # Have to add "file://" in front of file name
+          # has to be '--template-file' and not '-- template file'. No space or error will occur. 
+          # It's 'template-body' not 'template-file'
 
           command: |
             aws cloudformation deploy \
-              --template-file ./ec2_instance.yml \
+              --template-body ec2_instance.yml \
               --stack-name create_infrastructure-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-west-2  
 
