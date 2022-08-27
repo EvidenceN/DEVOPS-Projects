@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS EC2 Instance and Security Group
+Resources:
+  EC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties: 
+      SecurityGroups:
+        !ReF InstanceSecurityGroup
+      KeyName: Infra_create
+      ImageId: ami-0d70546e43a941d70
+      InstanceType: t2.micro
+  InstanceSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: For Infrastructure Creation Project
+      GroupName: Infrastructure-Creation
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Name: InfrastructureCreationSecurity
