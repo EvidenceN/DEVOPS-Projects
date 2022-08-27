@@ -1,3 +1,5 @@
+version: 2.1
+
 commands:
   AWS-Stack-Command:
     description: "A command to execute and launch EC2 instance & Corresponding Security Group in AWS"
