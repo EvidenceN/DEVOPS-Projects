@@ -17,10 +17,11 @@ commands:
           # It requires 'template-file' and not 'template body'. When I use  'aws cloudformation create-stack' , the argument says 'template body', but I guess this command  'aws cloudformation deploy' requires 'template file' instead. 
           # It is required that 'template-file' value be a string (So, name of file path needs to be in string quotations). Maybe that's what I was missing before. That didn't solve it. 
           # maybe adding a '/' in front of 'template file' value will resolve the issue of "Invalid template path ec2_instance.yml"
+          # Fully qualified 'template file' value file path. 
 
           command: |
             aws cloudformation deploy \
-              --template-file /ec2_instance.yml \
+              --template-file /.circleci/ec2_instance.yml \
               --stack-name create_infrastructure-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-west-2  
 
