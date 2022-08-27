@@ -1,7 +1,11 @@
 version: 2.1
 
+defaults: &docker_image # default name
+  docker:
+    - image: amazon/aws-cli
+
 commands:
-  AWS-Stack-Command:
+  aws-stack-command:
     description: "A command to execute and launch EC2 instance & Corresponding Security Group in AWS"
     steps:
       - checkout
@@ -16,11 +20,10 @@ commands:
 
 jobs:
   create_infrastructure:
-    docker:
-      - image: amazon/aws-cli
+    <<: *docker_image # calling the default above. 
 
     steps:
-      - AWS-Stack-Command
+      - aws-stack-command
 
 workflows:
   infra_create:
