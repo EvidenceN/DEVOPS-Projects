@@ -13,11 +13,13 @@ commands:
           name: Create Cloudformation Stack
           # | is needed to concatenate the strings
           # has to be '--template-file' and not '-- template file'. No space or error will occur. 
-          # It's 'template-body' not 'template-file'
+          # It's 'template-body' not 'template-file'. Caught this because circleCI thinks the template-file is a parameters file when it is not. That didn't work. 
+          # It requires 'template-file' and not 'template body'. When I use  'aws cloudformation create-stack' , the argument says 'template body', but I guess this command  'aws cloudformation deploy' requires 'template file' instead. 
+          # It is required that 'template-file' be a string. Maybe that's what I was missing before. 
 
           command: |
             aws cloudformation deploy \
-              --template-body ec2_instance.yml \
+              --template-file 'ec2_instance.yml' \
               --stack-name create_infrastructure-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-west-2  
 
