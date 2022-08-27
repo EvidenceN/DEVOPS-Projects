@@ -18,6 +18,7 @@ commands:
           # It is required that 'template-file' value be a string (So, name of file path needs to be in string quotations). Maybe that's what I was missing before. That didn't solve it. 
           # maybe adding a '/' in front of 'template file' value will resolve the issue of "Invalid template path ec2_instance.yml"
           # Fully qualified 'template file' value file path. 
+          # Moved the EC2_Instance.yml file to the same folder level as .circleci
 
           command: |
             aws cloudformation deploy \
